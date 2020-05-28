@@ -84,7 +84,7 @@ def reduced_edges_aproximation(filename, max_seconds=None):
         get_reduced_graph(solution_nn, original_problem_graph, True))
     graph = convert_to_digraph(original_problem_graph)
 
-    solution, cost = tsp_mip_cutting_planes_fixed.TSP().load_problem(graph, reduced_graph).build().solve(max_seconds)
+    solution, cost = tsp_mip_cutting_planes.TSP().load_problem(reduced_graph).build().solve(max_seconds)
     print(f'solution = {solution}, cost = {cost}')
     return solution, cost
 
@@ -105,7 +105,7 @@ def reduced_edges_2_aproximation(filename, max_seconds=None):
 
     graph = convert_to_digraph(original_problem_graph)
 
-    solution, cost = tsp_mip_cutting_planes_fixed.TSP().load_problem(graph, reduced_graph).build().solve(max_seconds)
+    solution, cost = tsp_mip_cutting_planes.TSP().load_problem(reduced_graph).build().solve(max_seconds)
     print(f'solution = {solution}, cost = {cost}')
     return solution, cost
 
@@ -145,7 +145,7 @@ def planar_aproximation_2(filename, max_seconds=None):
 
     reduced_graph = nx.operators.compose(planar_graph, all_nn_graph)
     
-    solution, cost = tsp_mip_cutting_planes_fixed.TSP().load_problem(graph, reduced_graph).build().solve(max_seconds)
+    solution, cost = tsp_mip_cutting_planes.TSP().load_problem(reduced_graph).build().solve(max_seconds)
     print(f'solution = {solution}, cost = {cost}')
     return solution, cost
 
