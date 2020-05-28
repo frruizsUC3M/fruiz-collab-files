@@ -12,7 +12,7 @@ from collections import namedtuple
 import matplotlib.pyplot as plt
 import itertools
 
-import tsp_mip_cutting_planes_fixed
+import tsp_mip_cutting_planes
 
 from nn import NN
 from pmfg import PMFG
@@ -107,7 +107,7 @@ class LocalSearchAugmented(object):
 
             # resolvemos usando el grafo temporal
             solution, cost = \
-                tsp_mip_cutting_planes_fixed.TSP().load_problem(original_graph, temp_reduced_graph).build().solve(max_seconds)
+                tsp_mip_cutting_planes.TSP().load_problem(temp_reduced_graph).build().solve(max_seconds)
 
             if solution is None:
                 it += 1
