@@ -12,7 +12,7 @@ from collections import namedtuple
 import matplotlib.pyplot as plt
 import itertools
 
-import tsp_mip_cutting_planes
+import tsp_mip_cutting_planes_fixed
 
 from nn import NN
 from pmfg import PMFG
