@@ -16,6 +16,7 @@ import itertools
 import csv
 import pandas as pd
 
+import tsp_mip_cutting_planes
 import tsp_mip_cutting_planes_fixed
 
 from ls import LocalSearchAugmented
@@ -122,7 +123,7 @@ def planar_aproximation(filename, max_seconds=None):
 
     reduced_graph = nx.operators.compose(planar_graph, tour_graph)
     
-    solution, cost = tsp_mip_cutting_planes_fixed.TSP().load_problem(graph, reduced_graph).build().solve(max_seconds)
+    solution, cost = tsp_mip_cutting_planes.TSP().load_problem(reduced_graph).build().solve(max_seconds)
     print(f'solution = {solution}, cost = {cost}')
     return solution, cost
 
