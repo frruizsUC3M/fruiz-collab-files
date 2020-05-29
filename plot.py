@@ -27,15 +27,24 @@ def plot_results_combine(dfs, output_filename, size_func=get_size_column, xlabel
         df['size'] = df['filename'].apply(size_func)
         df = df[['size', 'cost']].groupby(['size']).max().reset_index().sort_values(by=['size']).set_index('size')
 
-        plt.plot(df['cost'])
+        plt.plot(df['cost'], marker='.')
         legends.append(f'T(n) {algorithm_name}')
 
+    # plt.plot([0.0000002*i**3 for i in range(6, 432)])
+    # legends.append('an^3')
 
-    plt.title(f'cost evolution in experiment {experiment_name}.')
-    plt.ylabel('cost')
+    # plt.plot([0.00000011*i**3 for i in range(6, 432)])
+    # legends.append('bn^3')
+
+    # plt.plot([0.0000007*math.log(i)*i**2 for i in range(6, 432)])
+    # legends.append('c n^2 log n')
+
+
+    plt.title(f'Time evolution in reduction approach and exact algo\'s')
+    plt.ylabel('Time (s)')
     plt.xlabel(f'Problem size (n, {xlabel})')
     plt.legend(legends, loc='upper left')
-    plt.savefig(f'{output_filename}_cost_evolution.png')
+    plt.savefig(f'{output_filename}_evolution.png')
     plt.show()
 
 
@@ -51,20 +60,9 @@ def load_experiments_data(path, algorithm_names):
 
 
 if __name__ == '__main__':
-    
-    # algos = ['dfs', 'dfs_complete', 'dfs_optimal', 'dfs_optimal_complete',
-    # 'warshall', 'floyd_warshall', 'tarjan', 'kosaraju']
 
-    # algos = ['dfs', 'tarjan', 'kosaraju', 'warshall', 'dfs_optimal']
-
-    # algos = ['dfs_complete', 'dfs_optimal_complete', 'warshall', 'floyd_warshall']
-
-    # algos = ['clique_mip', 'clique_iterated_local_search']
-    # algos = ['clique_mip', 'clique_brute_force',
-    # 'clique_brute_force_discarding', 'clique_iterated_local_search']
-
-    algos = ['mst_aproximation', 'christofides_aproximation', 'nn_aproximation']
-    algos = ['reduced_edges_aproximation', 'reduced_edges_2_aproximation', 'planar_aproximation', 'planar_aproximation_2', 'exact', 'local_search_augmented']
+    # algos = ['mst_aproximation', 'christofides_aproximation', 'nn_aproximation']
+    # algos = ['reduced_edges_aproximation', 'reduced_edges_2_aproximation', 'planar_aproximation', 'planar_aproximation_2', 'exact', 'christofides_aproximation']
     algos = ['exact', 'local_search_augmented', 'gls']
 
     dfs = load_experiments_data('results_experiment_big', algos)

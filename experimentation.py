@@ -144,7 +144,10 @@ def get_args_algorithm(algo, filenames):
             'filename': filenames
         }
 
-    if algo == 'exact' or algo == 'reduced_edges_aproximation' or algo == 'planar_aproximation':
+    lal = ['exact', 'reduced_edges_aproximation', 'reduced_edges_2_ aproximation',
+    'planar_aproximation', 'planar_aproximation_2']
+
+    if algo in lal:
 
         return {
 
@@ -158,8 +161,8 @@ def get_args_algorithm(algo, filenames):
 
             'filename': filenames,
             'max_seconds': [120],
-            'max_attemps': [4],
-            'batch_size': [64],
+            'max_attemps': [2, 4],
+            'batch_size': [16, 64],
             'n_iters': [12]
         }
 
@@ -168,9 +171,9 @@ def get_args_algorithm(algo, filenames):
         return {
 
             'filename': filenames,
-            'alpha': [0.1, 0.3, 0.5, 0.7, 0.9],
-            'max_iterations': [25000, 50000, 100000],
-            'max_attemps': [4, 8, 16, 32]
+            'alpha': [0.7],
+            'max_iterations': [50000],
+            'max_attemps': [4]
             # 'alpha': [0.4],
             # 'max_iterations': [100000],
             # 'max_attemps': [32]
@@ -184,10 +187,10 @@ def get_args_algorithm(algo, filenames):
 
 def tsp_experimenter(experiment):
 
-    algorithms = ['local_search_augmented', 'mst_aproximation', 'nn_aproximation',
-    'reduced_edges_aproximation', 'planar_aproximation', 'gls']
+    algorithms = ['mst_aproximation', 'nn_aproximation', 'christofides_aproximation',
+    'reduced_edges_aproximation', 'reduced_edges_2_aproximation', 'planar_aproximation', 'planar_aproximation_2', 'exact']
 
-    algorithms = ['mst_aproximation', 'christofides_aproximation', 'nn_aproximation']
+    # algorithms = ['mst_aproximation', 'christofides_aproximation', 'nn_aproximation']
 
     algorithms = ['gls']
 

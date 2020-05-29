@@ -43,9 +43,8 @@ def local_search_augmented(filename, batch_size=8, n_iters=30, max_attemps=4, ma
 def exact(filename, max_seconds=None):
 
     original_problem_graph = TSPProblemParser().parseDirected(filename)
-    solution, cost = tsp_mip_cutting_planes_fixed.TSP().load_problem(original_problem_graph,
-        original_problem_graph).build().solve(max_seconds)
-    print(f'solution = {solution}, cost = {cost}')
+    solution, cost = tsp_mip_cutting_planes.TSP().load_problem(original_problem_graph).build().solve(max_seconds)
+    # print(f'solution = {solution}, cost = {cost}')
     return solution, cost
 
 
@@ -85,7 +84,7 @@ def reduced_edges_aproximation(filename, max_seconds=None):
     graph = convert_to_digraph(original_problem_graph)
 
     solution, cost = tsp_mip_cutting_planes.TSP().load_problem(reduced_graph).build().solve(max_seconds)
-    print(f'solution = {solution}, cost = {cost}')
+    # print(f'solution = {solution}, cost = {cost}')
     return solution, cost
 
 
@@ -106,7 +105,7 @@ def reduced_edges_2_aproximation(filename, max_seconds=None):
     graph = convert_to_digraph(original_problem_graph)
 
     solution, cost = tsp_mip_cutting_planes.TSP().load_problem(reduced_graph).build().solve(max_seconds)
-    print(f'solution = {solution}, cost = {cost}')
+    # print(f'solution = {solution}, cost = {cost}')
     return solution, cost
 
 
@@ -124,7 +123,7 @@ def planar_aproximation(filename, max_seconds=None):
     reduced_graph = nx.operators.compose(planar_graph, tour_graph)
     
     solution, cost = tsp_mip_cutting_planes.TSP().load_problem(reduced_graph).build().solve(max_seconds)
-    print(f'solution = {solution}, cost = {cost}')
+    # print(f'solution = {solution}, cost = {cost}')
     return solution, cost
 
 
@@ -146,7 +145,7 @@ def planar_aproximation_2(filename, max_seconds=None):
     reduced_graph = nx.operators.compose(planar_graph, all_nn_graph)
     
     solution, cost = tsp_mip_cutting_planes.TSP().load_problem(reduced_graph).build().solve(max_seconds)
-    print(f'solution = {solution}, cost = {cost}')
+    # print(f'solution = {solution}, cost = {cost}')
     return solution, cost
 
 
@@ -182,9 +181,19 @@ def plot_all_nn_solutions(filename):
 
     return solution, cost
 
+def plot_empty_problem(filename):
+
+    original_problem_graph = TSPProblemParser().parse(filename)
+    only_vertex_graph = nx.Graph()
+    only_vertex_graph.add_nodes_from(original_problem_graph.nodes)
+    pos = get_positions(filename)
+    plot_graph(only_vertex_graph, positions=pos)
+
 
 if __name__ == '__main__':
     
     # plot_all_nn_solutions('examples/ulysses22.json')
-    reduced_edges_aproximation('examples/ulysses22.json')
-    reduced_edges_2_aproximation('examples/ulysses22.json')
+    # reduced_edges_aproximation('examples/ulysses22.json')
+    # reduced_edges_2_aproximation('examples/ulysses22.json')
+
+    plot_empty_problem('examples/reduction_vs_exact/subproblem_29')
