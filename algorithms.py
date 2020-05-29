@@ -17,7 +17,6 @@ import csv
 import pandas as pd
 
 import tsp_mip_cutting_planes
-import tsp_mip_cutting_planes_fixed
 
 from ls import LocalSearchAugmented
 from nn import NN
@@ -160,40 +159,3 @@ def gls(filename, alpha=0.4, max_iterations=10000, max_attemps=4):
 
     print(f'solution = {solution}, cost = {cost}')
     return solution, cost
-
-
-def plot_all_nn_solutions(filename):
-
-    original_problem_graph = TSPProblemParser().parse(filename)
-    nn_algo = NN()
-    solution, cost = nn_algo.solve_complete(original_problem_graph)
-    print(f'solution = {solution}, cost = {cost}')
-
-    graph = get_reduced_graph(solution, original_problem_graph, False)
-    for s in nn_algo.solutions:
-        graph = nx.operators.compose(graph, get_reduced_graph(s, original_problem_graph, False))
-
-    pos = get_positions(filename)
-    print(pos)
-    plot_graph(original_problem_graph, positions=pos)
-    plot_graph(get_reduced_graph(solution, original_problem_graph, False), positions=pos)
-    plot_graph(graph, positions=pos)
-
-    return solution, cost
-
-def plot_empty_problem(filename):
-
-    original_problem_graph = TSPProblemParser().parse(filename)
-    only_vertex_graph = nx.Graph()
-    only_vertex_graph.add_nodes_from(original_problem_graph.nodes)
-    pos = get_positions(filename)
-    plot_graph(only_vertex_graph, positions=pos)
-
-
-if __name__ == '__main__':
-    
-    # plot_all_nn_solutions('examples/ulysses22.json')
-    # reduced_edges_aproximation('examples/ulysses22.json')
-    # reduced_edges_2_aproximation('examples/ulysses22.json')
-
-    plot_empty_problem('examples/reduction_vs_exact/subproblem_29')
